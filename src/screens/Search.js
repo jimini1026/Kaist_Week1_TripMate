@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -14,20 +15,45 @@ import SearchContent from '../components/SearchContent';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import GalleryImage from '../components/GalleryImage';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ExpandImage from '../components/ExpandImage';
 
 const Search = () => {
   const [image, setImage] = useState(null);
-  const statusBarHeight = getStatusBarHeight();
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
 
-  const getData = img => {
-    setImage(img);
+  const RowImage = ({bgColor1, bgColor2}) => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          padding: 15,
+        }}>
+        <GalleryImage bgColor={bgColor1} setImage={setImage} />
+        <GalleryImage bgColor={bgColor2} setImage={setImage} />
+      </View>
+    );
   };
+
   return (
     <SafeAreaView
-      style={{width: '100%', backgroundColor: 'white', position: 'relative'}}>
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'white',
+        position: 'relative',
+      }}>
       <ScrollView>
+        <View style={{paddingTop: 60, paddingBottom: 60}}>
+          <RowImage bgColor1="#FF607F" bgColor2="#00D7FF" />
+          <RowImage bgColor1="#40A940" bgColor2="#FF5AD9" />
+          <RowImage bgColor1="#FFA500" bgColor2="#98EBDC" />
+          <RowImage bgColor1="#FFC5D0" bgColor2="#FFFA82" />
+        </View>
+      </ScrollView>
+      {image ? <ExpandImage image={image} setImage={setImage} /> : null}
+      {/* <ScrollView>
         <SearchInput />
         <SearchContent getData={getData} />
       </ScrollView>
@@ -85,7 +111,7 @@ const Search = () => {
             </View>
           </View>
         </View>
-      ) : null}
+      ) : null} */}
     </SafeAreaView>
   );
 };
