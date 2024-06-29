@@ -9,7 +9,7 @@ import Posts from '../components/Posts';
 const Home = () => {
   return (
     <SafeAreaView>
-      <StatusBar backgroundColor="white" barStyle="dark-content" />
+      {/* <StatusBar backgroundColor="white" barStyle="dark-content" />
       <View
         style={{
           justifyContent: 'space-between',
@@ -36,7 +36,7 @@ const Home = () => {
       <ScrollView>
         <Stories />
         <Posts />
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView>
   );
 };

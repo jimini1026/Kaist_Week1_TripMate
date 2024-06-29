@@ -31,8 +31,8 @@ const App = () => {
               iconName = focused ? 'home-sharp' : 'home-outline';
             } else if (route.name === 'Search') {
               iconName = focused ? 'search' : 'search-outline';
-            } else if (route.name === 'Activity') {
-              iconName = focused ? 'heart' : 'heart-outline';
+              // } else if (route.name === 'Activity') {
+              //   iconName = focused ? 'heart' : 'heart-outline';
             } else if (route.name === 'Profile') {
               iconName = focused ? 'person-circle' : 'person-outline';
             }
@@ -42,7 +42,7 @@ const App = () => {
         })}>
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Search" component={Search} />
-        <Tab.Screen name="Activity" component={Activity} />
+        {/* <Tab.Screen name="Activity" component={Activity} /> */}
         <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     );
