@@ -4,12 +4,12 @@ import {
   StatusBar,
   Dimensions,
   TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
-import SearchInput from '../components/SearchInput';
-import SearchContent from '../components/SearchContent';
 import Ionic from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Image} from 'react-native';
 
@@ -20,59 +20,73 @@ const ExpandImage = ({image, setImage}) => {
   return (
     <View
       style={{
-        position: 'absolute',
         zIndex: 1,
         width: '100%',
         height: '100%',
         backgroundColor: 'rgba(52, 52, 52, 0.8)',
       }}>
       <StatusBar backgroundColor="#525252" barStyle="dark-content" />
-      <View
-        style={{
-          position: 'absolute',
-          backgroundColor: 'white',
-          width: '90%',
-          top: windowHeight / 6,
-          left: windowWidth / 18,
-          height: 465,
-          borderRadius: 15,
-          zIndex: 1,
+      <ScrollView
+        contentContainerStyle={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexGrow: 1,
         }}>
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingVertical: 10,
-            paddingHorizontal: 15,
+            backgroundColor: 'white',
+            width: '90%',
+            height: 600,
+            borderRadius: 15,
+            overflow: 'hidden',
           }}>
-          <TouchableOpacity onPress={() => setIsLike(true)}>
-            <Ionic
-              name={isLike ? 'heart' : 'heart-outline'}
-              style={{fontSize: 26, color: 'black'}}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingVertical: 10,
+              paddingHorizontal: 15,
+            }}>
+            <TouchableOpacity onPress={() => setIsLike(prev => !prev)}>
+              <Ionic
+                name={isLike ? 'heart' : 'heart-outline'}
+                style={{fontSize: 26, color: isLike ? 'red' : 'black'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setImage(null)}
+              style={{marginLeft: 'auto'}}>
+              <MaterialIcons
+                name="cancel"
+                style={{fontSize: 25, color: 'black'}}
+              />
+            </TouchableOpacity>
+          </View>
+          <Image source={image} style={{width: '100%', height: '60%'}} />
+          <View
+            style={{
+              width: '100%',
+              alignItems: 'center',
+              padding: 10,
+              flex: 1,
+            }}>
+            <TextInput
+              placeholder="메모장..."
+              placeholderTextColor="gray"
+              style={{
+                color: 'black',
+                backgroundColor: '#FAF3B6',
+                paddingVertical: 15,
+                paddingHorizontal: 20,
+                width: '100%',
+                height: '100%',
+                textAlignVertical: 'top',
+              }}
+              multiline
             />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setImage(null)}>
-            <MaterialIcons
-              name="cancel"
-              style={{fontSize: 25, color: 'black'}}
-            />
-          </TouchableOpacity>
+          </View>
         </View>
-        <Image source={image} style={{width: '100%', height: '80%'}} />
-        <View
-          style={{
-            justifyContent: 'space-around',
-            width: '100%',
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: 8,
-          }}>
-          <Ionic
-            name="person-circle-outline"
-            style={{fontSize: 26, color: 'black'}}
-          />
-        </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };
