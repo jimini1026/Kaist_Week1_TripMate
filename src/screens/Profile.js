@@ -1,12 +1,17 @@
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import PhoneNumber from '../components/PhoneNumber';
+import { useNavigation } from '@react-navigation/native';
+import EditProfile from '../components/EditProfile';
 
 const Profile = () => {
+  const [press, setPress] = useState(false);
+  const pressPress = () => {setPress(true)};
   return (
     <View style={{backgroundColor: '#F5F5F5'}}>
       <TouchableOpacity
+      onPress={pressPress}
         style={{
           flexDirection: 'row',
           paddingTop: '10%',
@@ -102,8 +107,24 @@ const Profile = () => {
           />
         </View>
       </ScrollView>
+      {press ? (
+        <View style={styles.overlay}>
+          <EditProfile setPress={setPress}/>
+          </View>
+          ) : null}
     </View>
   );
 };
+
+const styles ={
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zLndex: 1,
+  }
+}
 
 export default Profile;

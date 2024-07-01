@@ -8,7 +8,7 @@ import Profile from './src/screens/Profile';
 import {NavigationContainer} from '@react-navigation/native';
 import Status from './src/screens/Status';
 import FriendProfile from './src/screens/FriendProfile';
-import EditProfile from './src/screens/EditProfile';
+import EditProfile from './src/components/EditProfile';
 import Ionic from 'react-native-vector-icons/Ionicons';
 
 const App = () => {
@@ -28,13 +28,13 @@ const App = () => {
             let iconName;
             color = 'black';
             if (route.name === 'Home') {
-              iconName = focused ? 'home-sharp' : 'home-outline';
+              iconName = focused ? 'map' : 'map-outline';
             } else if (route.name === 'Search') {
-              iconName = focused ? 'search' : 'search-outline';
+              iconName = focused ? 'image-sharp' : 'image-outline';
               // } else if (route.name === 'Activity') {
               //   iconName = focused ? 'heart' : 'heart-outline';
             } else if (route.name === 'Profile') {
-              iconName = focused ? 'person-circle' : 'person-outline';
+              iconName = focused ? 'person' : 'person-outline';
             }
 
             return <Ionic name={iconName} size={size} color={color} />;
@@ -51,9 +51,9 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Bottom" component={BottomTabScreen} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="Status" component={Status} />
         <Stack.Screen name="FriendProfile" component={FriendProfile} />
-        <Stack.Screen name="EditProfile" component={EditProfile} />
       </Stack.Navigator>
     </NavigationContainer>
   );
