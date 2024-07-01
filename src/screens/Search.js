@@ -1,5 +1,5 @@
 import {View, ScrollView, TouchableOpacity, Text} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import GalleryImage from '../components/GalleryImage';
 import ExpandImage from '../components/ExpandImage';
@@ -16,7 +16,10 @@ import post7 from '../../assets/images/post7.jpeg';
 import post8 from '../../assets/images/post8.jpeg';
 import post9 from '../../assets/images/post9.jpeg';
 
-const Search = () => {
+const Search = ({route}) => {
+  const imageSource = route?.params?.imageSrc;
+  const imgIndex = route?.params?.imgIndex;
+
   const images = [
     post1,
     post2,
@@ -51,11 +54,16 @@ const Search = () => {
     {id: 9, note: ''},
   ];
 
-  const [image, setImage] = useState(null);
-  const [imgIndx, setImgIndx] = useState(null);
+  const [image, setImage] = useState(imageSource);
+  const [imgIndx, setImgIndx] = useState(imgIndex);
   const [isLikeDatas, setIsLikeDatas] = useState(isLikeData);
   const [noteDatas, setNoteDatas] = useState(noteData);
   const [state, setState] = useState('all');
+
+  useEffect(() => {
+    setImage(imageSource);
+    setImgIndx(imgIndex);
+  }, [imageSource, imgIndex, route?.params?.n]);
 
   const FilteredImages = () => {
     switch (state) {

@@ -52,6 +52,7 @@ const App = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Bottom" component={BottomTabScreen} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="Home" component={Home} />
         {/* <Stack.Screen name="Status" component={Status} />
         <Stack.Screen name="FriendProfile" component={FriendProfile} /> */}
       </Stack.Navigator>
