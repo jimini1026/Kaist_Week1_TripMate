@@ -5,7 +5,6 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
@@ -13,10 +12,29 @@ import Ionic from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Image} from 'react-native';
 
-const ExpandImage = ({image, setImage}) => {
-  const [isLike, setIsLike] = useState(false);
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
+const ExpandImage = ({
+  image,
+  setImage,
+  isLikeDatas,
+  setIsLikeDatas,
+  indx,
+  noteDatas,
+  setNoteDatas,
+}) => {
+  const [isLike, setIslike] = useState(isLikeDatas[indx].isLike);
+  const [note, setNote] = useState(noteDatas[indx].note);
+  const updateIsLikeDatas = index => {
+    setIslike(!isLike);
+    let copiedItems = [...isLikeDatas];
+    copiedItems[index].isLike = !copiedItems[index].isLike;
+    setIsLikeDatas(copiedItems);
+  };
+  const updateNoteDatas = index => {
+    let copiedItems = [...noteDatas];
+    copiedItems[index].note = note;
+    setNoteDatas(copiedItems);
+  };
+
   return (
     <View
       style={{
@@ -47,14 +65,20 @@ const ExpandImage = ({image, setImage}) => {
               paddingVertical: 10,
               paddingHorizontal: 15,
             }}>
-            <TouchableOpacity onPress={() => setIsLike(prev => !prev)}>
+            <TouchableOpacity onPress={() => updateIsLikeDatas(indx)}>
               <Ionic
                 name={isLike ? 'heart' : 'heart-outline'}
-                style={{fontSize: 26, color: isLike ? 'red' : 'black'}}
+                style={{
+                  fontSize: 26,
+                  color: isLike ? 'red' : 'black',
+                }}
               />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setImage(null)}
+              onPress={() => {
+                setImage(null);
+                updateNoteDatas(indx);
+              }}
               style={{marginLeft: 'auto'}}>
               <MaterialIcons
                 name="cancel"
@@ -72,6 +96,8 @@ const ExpandImage = ({image, setImage}) => {
             }}>
             <TextInput
               placeholder="메모장..."
+              value={note}
+              onChange={e => setNote(e.nativeEvent.text)}
               placeholderTextColor="gray"
               style={{
                 color: 'black',

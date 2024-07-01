@@ -10,8 +10,6 @@ import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import Stories from '../components/Stories';
-import Posts from '../components/Posts';
 import MapView, {Marker} from 'react-native-maps';
 
 const Home = () => {

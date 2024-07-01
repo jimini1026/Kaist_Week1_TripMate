@@ -1,4 +1,4 @@
-import {View, ScrollView, TouchableOpacity} from 'react-native';
+import {View, ScrollView, TouchableOpacity, Text} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import GalleryImage from '../components/GalleryImage';
@@ -28,31 +28,85 @@ const Search = () => {
     post8,
     post9,
   ];
+  const isLikeData = [
+    {id: 1, isLike: false},
+    {id: 2, isLike: false},
+    {id: 3, isLike: false},
+    {id: 4, isLike: false},
+    {id: 5, isLike: false},
+    {id: 6, isLike: false},
+    {id: 7, isLike: false},
+    {id: 8, isLike: false},
+    {id: 9, isLike: false},
+  ];
+  const noteData = [
+    {id: 1, note: ''},
+    {id: 2, note: ''},
+    {id: 3, note: ''},
+    {id: 4, note: ''},
+    {id: 5, note: ''},
+    {id: 6, note: ''},
+    {id: 7, note: ''},
+    {id: 8, note: ''},
+    {id: 9, note: ''},
+  ];
 
   const [image, setImage] = useState(null);
+  const [imgIndx, setImgIndx] = useState(null);
+  const [isLikeDatas, setIsLikeDatas] = useState(isLikeData);
+  const [noteDatas, setNoteDatas] = useState(noteData);
+  const [state, setState] = useState('all');
 
-  const RowImage = ({bgColor1, bgColor2, imgSource1, imgSource2}) => {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          padding: 15,
-        }}>
-        <GalleryImage
-          bgColor={bgColor1}
-          setImage={setImage}
-          imgSource={imgSource1}
-        />
-        {imgSource2 ? (
+  const FilteredImages = () => {
+    switch (state) {
+      case 'all':
+        return images.map((img, indx) => (
           <GalleryImage
-            bgColor={bgColor2}
+            key={indx}
+            bgColor={'#FF607F'}
             setImage={setImage}
-            imgSource={imgSource2}
+            imgSource={img}
+            imgIndx={indx}
+            setImgIndx={setImgIndx}
+            isLike={isLikeDatas[indx].isLike}
+            note={noteDatas[indx].note ? true : false}
           />
-        ) : null}
-      </View>
-    );
+        ));
+      case 'like':
+        return isLikeDatas.map((isLikeData, indx) => {
+          if (isLikeData.isLike) {
+            return (
+              <GalleryImage
+                key={indx}
+                bgColor={'#FF607F'}
+                setImage={setImage}
+                imgSource={images[indx]}
+                imgIndx={indx}
+                setImgIndx={setImgIndx}
+                isLike={isLikeDatas[indx].isLike}
+                note={noteDatas[indx].note ? true : false}
+              />
+            );
+          }
+        });
+      case 'note':
+        return noteDatas.map((noteData, indx) => {
+          if (noteData.note) {
+            return (
+              <GalleryImage
+                key={indx}
+                bgColor={'#FF607F'}
+                setImage={setImage}
+                imgSource={images[indx]}
+                imgIndx={indx}
+                setImgIndx={setImgIndx}
+                isLike={isLikeDatas[indx].isLike}
+                note={noteDatas[indx].note ? true : false}
+              />
+            );
+          }
+        });
+    }
   };
 
   return (
@@ -76,19 +130,19 @@ const Search = () => {
               justifyContent: 'space-between',
               width: '60%',
             }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setState('all')}>
               <FontAwesome5
                 name="images"
                 style={{fontSize: 30, color: 'black'}}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setState('like')}>
               <MaterialCommunityIcons
                 name="heart-multiple"
                 style={{fontSize: 30, color: 'black'}}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setState('note')}>
               <MaterialCommunityIcons
                 name="note-multiple"
                 style={{fontSize: 30, color: 'black'}}
@@ -99,32 +153,28 @@ const Search = () => {
       )}
       <ScrollView>
         <View style={{paddingBottom: 60}}>
-          <RowImage
-            bgColor1="#FF607F"
-            bgColor2="#00D7FF"
-            imgSource1={images[0]}
-            imgSource2={images[1]}
-          />
-          <RowImage
-            bgColor1="#40A940"
-            bgColor2="#FF5AD9"
-            imgSource1={images[2]}
-            imgSource2={images[3]}
-          />
-          <RowImage
-            bgColor1="#FFA500"
-            bgColor2="#98EBDC"
-            imgSource1={images[4]}
-            imgSource2={images[5]}
-          />
-          <RowImage
-            bgColor1="#FFC5D0"
-            bgColor2="#FFFA82"
-            imgSource1={images[6]}
-          />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              padding: 15,
+              flexWrap: 'wrap',
+            }}>
+            <FilteredImages />
+          </View>
         </View>
       </ScrollView>
-      {image ? <ExpandImage image={image} setImage={setImage} /> : null}
+      {image ? (
+        <ExpandImage
+          image={image}
+          setImage={setImage}
+          isLikeDatas={isLikeDatas}
+          setIsLikeDatas={setIsLikeDatas}
+          indx={imgIndx}
+          noteDatas={noteDatas}
+          setNoteDatas={setNoteDatas}
+        />
+      ) : null}
     </SafeAreaView>
   );
 };
