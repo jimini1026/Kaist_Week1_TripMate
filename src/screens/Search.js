@@ -15,6 +15,17 @@ import post6 from '../../assets/images/post6.jpeg';
 import post7 from '../../assets/images/post7.jpeg';
 import post8 from '../../assets/images/post8.jpeg';
 import post9 from '../../assets/images/post9.jpeg';
+import post10 from '../../assets/images/post10.jpeg';
+import post11 from '../../assets/images/post11.jpeg';
+import post12 from '../../assets/images/post12.jpeg';
+import post13 from '../../assets/images/post13.jpeg';
+import post14 from '../../assets/images/post14.jpeg';
+import post15 from '../../assets/images/post15.jpeg';
+import post16 from '../../assets/images/post16.jpeg';
+import post17 from '../../assets/images/post17.jpeg';
+import post18 from '../../assets/images/post18.jpeg';
+import post19 from '../../assets/images/post19.jpeg';
+import post20 from '../../assets/images/post20.jpeg';
 
 const Search = ({route}) => {
   const imageSource = route?.params?.imageSrc;
@@ -30,6 +41,17 @@ const Search = ({route}) => {
     post7,
     post8,
     post9,
+    post10,
+    post11,
+    post12,
+    post13,
+    post14,
+    post15,
+    post16,
+    post17,
+    post18,
+    post19,
+    post20,
   ];
   const isLikeData = [
     {id: 1, isLike: false},
@@ -41,6 +63,17 @@ const Search = ({route}) => {
     {id: 7, isLike: false},
     {id: 8, isLike: false},
     {id: 9, isLike: false},
+    {id: 10, isLike: false},
+    {id: 11, isLike: false},
+    {id: 12, isLike: false},
+    {id: 13, isLike: false},
+    {id: 14, isLike: false},
+    {id: 15, isLike: false},
+    {id: 16, isLike: false},
+    {id: 17, isLike: false},
+    {id: 18, isLike: false},
+    {id: 19, isLike: false},
+    {id: 20, isLike: false},
   ];
   const noteData = [
     {id: 1, note: ''},
@@ -52,6 +85,17 @@ const Search = ({route}) => {
     {id: 7, note: ''},
     {id: 8, note: ''},
     {id: 9, note: ''},
+    {id: 10, note: ''},
+    {id: 11, note: ''},
+    {id: 12, note: ''},
+    {id: 13, note: ''},
+    {id: 14, note: ''},
+    {id: 15, note: ''},
+    {id: 16, note: ''},
+    {id: 17, note: ''},
+    {id: 18, note: ''},
+    {id: 19, note: ''},
+    {id: 20, note: ''},
   ];
 
   const [image, setImage] = useState(imageSource);

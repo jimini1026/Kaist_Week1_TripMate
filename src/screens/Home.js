@@ -5,12 +5,15 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  PermissionsAndroid,
+  Text,
 } from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MapView, {Marker} from 'react-native-maps';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import post1 from '../../assets/images/post1.jpeg';
 import post2 from '../../assets/images/post2.jpeg';
 import post3 from '../../assets/images/post3.jpeg';
@@ -20,10 +23,23 @@ import post6 from '../../assets/images/post6.jpeg';
 import post7 from '../../assets/images/post7.jpeg';
 import post8 from '../../assets/images/post8.jpeg';
 import post9 from '../../assets/images/post9.jpeg';
+import post10 from '../../assets/images/post10.jpeg';
+import post11 from '../../assets/images/post11.jpeg';
+import post12 from '../../assets/images/post12.jpeg';
+import post13 from '../../assets/images/post13.jpeg';
+import post14 from '../../assets/images/post14.jpeg';
+import post15 from '../../assets/images/post15.jpeg';
+import post16 from '../../assets/images/post16.jpeg';
+import post17 from '../../assets/images/post17.jpeg';
+import post18 from '../../assets/images/post18.jpeg';
+import post19 from '../../assets/images/post19.jpeg';
+import post20 from '../../assets/images/post20.jpeg';
 
 const Home = ({navigation: {navigate}}) => {
   let n = 0;
   const [wannaPin, setWannaPin] = useState(false);
+  const [wannaData, setWannaData] = useState(false);
+  const [data, setData] = useState(null);
 
   const handleMarkerPress = index => {
     navigate('Search', {imageSrc: images[index], imgIndex: index, n: n++});
@@ -39,6 +55,17 @@ const Home = ({navigation: {navigate}}) => {
     {id: 7, latitude: null, longitude: null},
     {id: 8, latitude: null, longitude: null},
     {id: 9, latitude: null, longitude: null},
+    {id: 10, latitude: null, longitude: null},
+    {id: 11, latitude: null, longitude: null},
+    {id: 12, latitude: null, longitude: null},
+    {id: 13, latitude: null, longitude: null},
+    {id: 14, latitude: null, longitude: null},
+    {id: 15, latitude: null, longitude: null},
+    {id: 16, latitude: null, longitude: null},
+    {id: 17, latitude: null, longitude: null},
+    {id: 18, latitude: null, longitude: null},
+    {id: 19, latitude: null, longitude: null},
+    {id: 20, latitude: null, longitude: null},
   ];
   const images = [
     post1,
@@ -50,30 +77,71 @@ const Home = ({navigation: {navigate}}) => {
     post7,
     post8,
     post9,
+    post10,
+    post11,
+    post12,
+    post13,
+    post14,
+    post15,
+    post16,
+    post17,
+    post18,
+    post19,
+    post20,
   ];
   const [location, setLocation] = useState(locations);
   const [gps, setGps] = useState({touchLongitude: 0, touchLatitude: 0});
+
+  // fetch(
+  //   'https://nominatim.openstreetmap.org/reverse?format=json&lat=' +
+  //     59.00059275 +
+  //     '&lon=' +
+  //     -158.53654951755487,
+  // )
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log(data);
+  //   })
+  //   .catch(error => console.error(error));
 
   return (
     <SafeAreaView>
       <View
         style={{
-          backgroundColor: 'white',
           alignItems: 'center',
           height: '100%',
+          position: 'relative',
         }}>
         <MapView
           style={styles.map}
           showsMyLocationButton={true}
+          onMapReady={() => {
+            PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            );
+          }}
           showsUserLocation={true}
+          followsUserLocation={true}
           initialRegion={{
-            latitude: 45.65,
-            longitude: -78.9,
+            latitude: 36.37171,
+            longitude: 127.362,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
           onPress={e => {
-            if (!wannaPin) {
+            if (wannaData) {
+              fetch(
+                'https://nominatim.openstreetmap.org/reverse?format=json&lat=' +
+                  e.nativeEvent.coordinate.latitude +
+                  '&lon=' +
+                  e.nativeEvent.coordinate.longitude,
+              )
+                .then(response => response.json())
+                .then(data => {
+                  setData(data);
+                })
+                .catch(error => alert(error));
+            } else if (!wannaPin) {
               setWannaPin(prev => !prev);
               let copiedGps = {...gps};
               copiedGps.touchLatitude = e.nativeEvent.coordinate.latitude;
@@ -106,6 +174,38 @@ const Home = ({navigation: {navigate}}) => {
             }
           })}
         </MapView>
+        <TouchableOpacity
+          // style={{zIndex: 1 }}
+          pointerEvents="box-none"
+          onPress={() => {
+            setWannaData(prev => !prev);
+            wannaData && setData(null);
+          }}
+          style={{position: 'absolute', top: 100, right: 15}}>
+          <FontAwesome5
+            name={wannaData ? 'search-location' : 'search'}
+            style={{
+              fontSize: 30,
+              color: 'black',
+            }}
+          />
+        </TouchableOpacity>
+        {wannaData && data ? (
+          <View
+            style={{
+              backgroundColor: 'pink',
+              width: '100%',
+              height: 200,
+              position: 'absolute',
+              bottom: 0,
+            }}>
+            <Text style={{color: 'black'}}>
+              {data.name ? '장소 이름 : ' + data.name : null}
+            </Text>
+            <Text style={{color: 'black'}}>장소 종류 : {data.type}</Text>
+            <Text style={{color: 'black'}}>주소 : {data.display_name}</Text>
+          </View>
+        ) : null}
         {wannaPin ? (
           <View
             style={{
