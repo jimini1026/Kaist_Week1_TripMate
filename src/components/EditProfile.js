@@ -12,7 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const EditProfile = ({ setPress, addProfile }) => {
+const EditProfile = ({ setPress, addProfile, addMapProfile }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [emailaddr, setemailaddr] = useState('');
@@ -24,6 +24,12 @@ const EditProfile = ({ setPress, addProfile }) => {
   const handleAddProfile = () => {
     if (name && phoneNumber) {
       addProfile({ name, phoneNumber, emailaddr, addr });
+    }
+  };
+
+  const handleAddMapProfile = () => {
+    if (name && phoneNumber) {
+      addMapProfile({ name, phoneNumber, emailaddr, addr });
     }
   };
 
@@ -110,7 +116,7 @@ const EditProfile = ({ setPress, addProfile }) => {
           <TouchableOpacity style={button.container} onPress={handleAddProfile}>
             <Text style={button.text}>개인연락처</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={button.container}>
+          <TouchableOpacity style={button.container} onPress={handleAddMapProfile}>
             <Text style={button.text}>지도연락처</Text>
           </TouchableOpacity>
         </View>

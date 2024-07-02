@@ -15,6 +15,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const ProfileInfo = ({ pressInfo , setPressInfo, profile }) => {
     const { name, phoneNumber, emailaddr, addr } = profile;
+    //
 
     return (
         <SafeAreaView style={styles.safeArea}>
