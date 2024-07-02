@@ -4,15 +4,20 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import PhoneNumber from '../components/PhoneNumber';
 import profileData from '../../assets/ProfileData';
 import EditProfile from '../components/EditProfile';
+import ProfileInfo from '../components/ProfileInfo';
 
 const Profile = () => {
+
   const [press, setPress] = useState(false);
   const pressPress = () => { setPress(true) };
+
+  const [pressInfo, setPressInfo] = useState([false, ""]);
+
 
   const [profiles, setProfiles] = useState(profileData);
 
   const addProfile = (profile) => {
-    setProfiles([...profiles, { ...profile, id: (profiles.length + 1).toString() }]);
+    setProfiles([...profiles, { ...profile, id: (profiles.length + 1)}]);
     setPress(false); // 새로운 profile 저장 후 editprofile창 닫기 
   }
 
@@ -21,13 +26,17 @@ const Profile = () => {
       iconName="person-circle-outline"
       name={item.name}
       phoneNumber={item.phoneNumber}
+      pressInfo={pressInfo}
+      setPressInfo={setPressInfo}
     />
   )
+
+  
 
   const listHeaderComponent = () => (
     <View style={styles.sectionContainer}>
       <View style = {{width: '100%', alignItems: 'center'}}>
-        <Text style = {{paddingRight: '45%', color: 'gray'}}>추가 연락처</Text>
+        <Text style = {{paddingRight: '50%', color: 'gray'}}>추가 연락처</Text>
         <View
           style={{
             width: 300,
@@ -66,6 +75,8 @@ const Profile = () => {
       />
     </View>
   )
+
+  const selectedProfile = profiles.find(profile => profile.phoneNumber === pressInfo[1]);
           
   return (
     <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
@@ -94,13 +105,15 @@ const Profile = () => {
           }}
         />
       </TouchableOpacity>
-      <View style={{ alignItems: 'center', marginBottom: 10, width: '100%' }}>
-        <Text style={{ paddingRight: '45%' }}>나의 연락처</Text>
-        <PhoneNumber
-          iconName="person-circle"
-          name="오세연"
-          phoneNumber="010-1234-5678"
-        />
+      <View style={{alignItems: 'center', marginBottom: 10, width: '100%' }}>
+        <Text style={{ paddingRight: '45%', paddingBottom:5 }}>나의 연락처</Text>
+        <View pointerEvents='none'>
+          <PhoneNumber
+            iconName="person-circle"
+            name="오세연"
+            phoneNumber="010-1234-5678"
+          />
+        </View>
       </View>
       <FlatList
         data={profiles}
@@ -119,6 +132,11 @@ const Profile = () => {
           <EditProfile setPress={setPress} addProfile={addProfile} />
         </View>
       ) : null}
+      {pressInfo[0] && selectedProfile ?
+        <View style={styles.overlay}>
+          <ProfileInfo pressInfo={pressInfo} setPressInfo={setPressInfo} profile={selectedProfile} />
+        </View>
+       : null}
     </View>
   )
 }

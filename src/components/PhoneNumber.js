@@ -1,9 +1,10 @@
-import {View, Text} from 'react-native';
-import React from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ProfileInfo from './ProfileInfo';
 
-const PhoneNumber = ({iconName, name, phoneNumber, iconKind = 'Ionic'}) => {
+const PhoneNumber = ({iconName, name, phoneNumber, pressInfo, setPressInfo, iconKind = 'Ionic'}) => {
   let iconIsIonic = false;
   if (iconKind === 'Ionic') {
     iconIsIonic = true;
@@ -12,7 +13,10 @@ const PhoneNumber = ({iconName, name, phoneNumber, iconKind = 'Ionic'}) => {
   }
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => {
+        setPressInfo([true, phoneNumber]);
+      }}
       style={{
         backgroundColor: 'white',
         flexDirection: 'row',
@@ -41,8 +45,19 @@ const PhoneNumber = ({iconName, name, phoneNumber, iconKind = 'Ionic'}) => {
         </Text>
         <Text style={{color: 'gray'}}>{phoneNumber}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
+
+const styles = {
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zLndex: 1,
+  },
+}
 
 export default PhoneNumber;
