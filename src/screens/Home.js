@@ -8,12 +8,13 @@ import {
   PermissionsAndroid,
   Text,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MapView, {Marker} from 'react-native-maps';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import post1 from '../../assets/images/post1.jpeg';
 import post2 from '../../assets/images/post2.jpeg';
 import post3 from '../../assets/images/post3.jpeg';
@@ -34,12 +35,74 @@ import post17 from '../../assets/images/post17.jpeg';
 import post18 from '../../assets/images/post18.jpeg';
 import post19 from '../../assets/images/post19.jpeg';
 import post20 from '../../assets/images/post20.jpeg';
+import axios from 'axios';
+
+const mockData = [
+  {
+    id: 1,
+    name: '아주대 병원',
+    phoneNumber: '010-1234-5678',
+    emailaddr: '2004imjimin@pusan.ac.kr',
+    addr: '아주대병원',
+  },
+  {
+    id: 1,
+    name: '임지민',
+    phoneNumber: '010-1234-5678',
+    emailaddr: '2004imjimin@pusan.ac.kr',
+    addr: '지스트',
+  },
+  {
+    id: 1,
+    name: '임지민',
+    phoneNumber: '010-1234-5678',
+    emailaddr: '2004imjimin@pusan.ac.kr',
+    addr: '부산백병원',
+  },
+];
 
 const Home = ({navigation: {navigate}}) => {
   let n = 0;
   const [wannaPin, setWannaPin] = useState(false);
   const [wannaData, setWannaData] = useState(false);
   const [data, setData] = useState(null);
+  const [coordinateData, setCoordinateData] = useState([]);
+
+  const findCoordinate = async address => {
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+          address,
+        )}&format=json`,
+      );
+      console.log('response.data: ' + response.data);
+      return [
+        parseFloat(response.data[0].lat),
+        parseFloat(response.data[0].lon),
+      ];
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      const coordinates = await Promise.all(
+        mockData.map(async data => {
+          const [lat, lon] = await findCoordinate(data.addr);
+          return [lat, lon];
+        }),
+      );
+      setCoordinateData(coordinates);
+      setAllCoordinatesFetched(true);
+    };
+
+    fetchCoordinates();
+  }, []);
+
+  useEffect(() => {
+    console.log('coordinateData: ', coordinateData);
+  }, [coordinateData]);
 
   const handleMarkerPress = index => {
     navigate('Search', {imageSrc: images[index], imgIndex: index, n: n++});
@@ -91,18 +154,7 @@ const Home = ({navigation: {navigate}}) => {
   ];
   const [location, setLocation] = useState(locations);
   const [gps, setGps] = useState({touchLongitude: 0, touchLatitude: 0});
-
-  // fetch(
-  //   'https://nominatim.openstreetmap.org/reverse?format=json&lat=' +
-  //     59.00059275 +
-  //     '&lon=' +
-  //     -158.53654951755487,
-  // )
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     console.log(data);
-  //   })
-  //   .catch(error => console.error(error));
+  const [allCoordinatesFetched, setAllCoordinatesFetched] = useState(false);
 
   return (
     <SafeAreaView>
@@ -148,7 +200,6 @@ const Home = ({navigation: {navigate}}) => {
               copiedGps.touchLongitude = e.nativeEvent.coordinate.longitude;
               setGps(copiedGps);
             }
-            // alert(e.nativeEvent.coordinate.latitude);
           }}>
           {location.map((loc, indx) => {
             if (loc.latitude) {
@@ -173,9 +224,22 @@ const Home = ({navigation: {navigate}}) => {
               );
             }
           })}
+          {allCoordinatesFetched &&
+            coordinateData.map((data, index) => (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: data[0],
+                  longitude: data[1],
+                }}>
+                <FontAwesome6
+                  name="phone-volume"
+                  style={{fontSize: 25, color: 'black'}}
+                />
+              </Marker>
+            ))}
         </MapView>
         <TouchableOpacity
-          // style={{zIndex: 1 }}
           pointerEvents="box-none"
           onPress={() => {
             setWannaData(prev => !prev);
