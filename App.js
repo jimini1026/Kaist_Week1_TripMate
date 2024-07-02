@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useState} from 'react';
 import Home from './src/screens/Home';
 import Search from './src/screens/Search';
 import Activity from './src/screens/Activity';
@@ -13,6 +13,22 @@ import EditProfile from './src/components/EditProfile';
 import Ionic from 'react-native-vector-icons/Ionicons';
 
 const App = () => {
+  const [mapData, setMapData] = useState([
+    {
+      id: 1,
+      name: '아주대병원',
+      phoneNumber: '010-0000-0000',
+      emailaddr: '',
+      addr: '아주대병원',
+    },
+    {
+      id: 2,
+      name: '백병원',
+      phoneNumber: '010-0000-0000',
+      emailaddr: '',
+      addr: '백병원',
+    },
+  ]);
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
   const BottomTabScreen = () => {
@@ -44,7 +60,11 @@ const App = () => {
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Search" component={Search} />
         {/* <Tab.Screen name="Activity" component={Activity} /> */}
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="Profile">
+          {props => (
+            <Profile {...props} mapData={mapData} setMapData={setMapData} />
+          )}
+        </Tab.Screen>
       </Tab.Navigator>
     );
   };

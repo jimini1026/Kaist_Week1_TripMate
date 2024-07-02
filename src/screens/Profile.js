@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, FlatList, MaskedViewComponent } from 'react-native';
 import React, { useState } from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import PhoneNumber from '../components/PhoneNumber';
@@ -6,7 +6,7 @@ import profileData from '../../assets/ProfileData';
 import EditProfile from '../components/EditProfile';
 import ProfileInfo from '../components/ProfileInfo';
 
-const Profile = () => {
+const Profile = ({mapData, setMapData}) => {
 
   const [press, setPress] = useState(false);
   const pressPress = () => { setPress(true) };
@@ -21,6 +21,11 @@ const Profile = () => {
     setPress(false); // 새로운 profile 저장 후 editprofile창 닫기 
   }
 
+  const addMapProfile = (profile) => {
+    setMapData([...mapData, {...profile, id: (profiles.length +1)}]);
+    setPress(false);
+  }
+
   const renderProfile = ({ item }) => (
     <PhoneNumber
       iconName="person-circle-outline"
@@ -31,6 +36,16 @@ const Profile = () => {
     />
   )
 
+  const renderMapProfile = ({ item }) => (
+      <PhoneNumber
+        iconName="map-marker"
+        name={item.name}
+        phoneNumber={item.phoneNumber}
+        pressInfo={pressInfo}
+        setPressInfo={setPressInfo}
+        iconKind='map-marker'
+      />
+  )
   
 
   const listHeaderComponent = () => (
@@ -61,22 +76,16 @@ const Profile = () => {
           marginVertical: 10,
         }}
       />
-      <PhoneNumber
-        iconName="map-marker"
-        name="병원"
-        phoneNumber="010-1234-5678"
-        iconKind="map-marker"
-      />
-      <PhoneNumber
-        iconName="map-marker"
-        name="편의점"
-        phoneNumber="010-1234-5678"
-         iconKind="map-marker"
+      <FlatList
+        data={mapData}
+        renderItem={renderMapProfile}
+        keyExtractor={(item) => item.id.toString()}
       />
     </View>
   )
 
   const selectedProfile = profiles.find(profile => profile.phoneNumber === pressInfo[1]);
+  const selectedMapProfile = mapData.find(profile => profile.phoneNumber === pressInfo[1]);
           
   return (
     <View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
@@ -129,12 +138,12 @@ const Profile = () => {
       />
       {press ? (
         <View style={styles.overlay}>
-          <EditProfile setPress={setPress} addProfile={addProfile} />
+          <EditProfile setPress={setPress} addProfile={addProfile} addMapProfile={addMapProfile} />
         </View>
       ) : null}
-      {pressInfo[0] && selectedProfile ?
+      {pressInfo[0] && (selectedProfile || selectedMapProfile) ?
         <View style={styles.overlay}>
-          <ProfileInfo pressInfo={pressInfo} setPressInfo={setPressInfo} profile={selectedProfile} />
+          <ProfileInfo pressInfo={pressInfo} setPressInfo={setPressInfo} profile={selectedProfile||selectedMapProfile} />
         </View>
        : null}
     </View>
