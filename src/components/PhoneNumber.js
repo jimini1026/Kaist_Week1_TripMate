@@ -17,7 +17,7 @@ const PhoneNumber = ({iconName, name, phoneNumber, iconKind = 'Ionic'}) => {
         backgroundColor: 'white',
         flexDirection: 'row',
         borderRadius: 20,
-        width: '80%',
+        width: 330,
         alignItems: 'center',
         paddingHorizontal: 20,
         paddingTop: 7,
