@@ -5,6 +5,7 @@ import Home from './src/screens/Home';
 import Search from './src/screens/Search';
 import Activity from './src/screens/Activity';
 import Profile from './src/screens/Profile';
+import ProfileInfo from './src/components/ProfileInfo';
 import {NavigationContainer} from '@react-navigation/native';
 import Status from './src/screens/Status';
 import FriendProfile from './src/screens/FriendProfile';
@@ -53,6 +54,7 @@ const App = () => {
         <Stack.Screen name="Bottom" component={BottomTabScreen} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="ProfileInfo" component={ProfileInfo} />
         {/* <Stack.Screen name="Status" component={Status} />
         <Stack.Screen name="FriendProfile" component={FriendProfile} /> */}
       </Stack.Navigator>
