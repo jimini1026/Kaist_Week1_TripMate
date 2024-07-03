@@ -17,14 +17,14 @@ const App = () => {
     {
       id: 1,
       name: '아주대병원',
-      phoneNumber: '010-0000-0000',
+      phoneNumber: '1688-6114',
       emailaddr: '',
       addr: '아주대병원',
     },
     {
       id: 2,
       name: '백병원',
-      phoneNumber: '010-0000-0000',
+      phoneNumber: '1688-2213',
       emailaddr: '',
       addr: '백병원',
     },

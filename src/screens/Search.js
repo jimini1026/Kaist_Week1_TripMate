@@ -5,6 +5,7 @@ import GalleryImage from '../components/GalleryImage';
 import ExpandImage from '../components/ExpandImage';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionic from 'react-native-vector-icons/Ionicons';
 
 import post1 from '../../assets/images/post1.jpeg';
 import post2 from '../../assets/images/post2.jpeg';
@@ -112,25 +113,25 @@ const Search = ({route}) => {
   const FilteredImages = () => {
     switch (state) {
       case 'all':
-        return images.map((img, indx) => (
-          <GalleryImage
-            key={indx}
-            bgColor={'#FF607F'}
-            setImage={setImage}
-            imgSource={img}
-            imgIndx={indx}
-            setImgIndx={setImgIndx}
-            isLike={isLikeDatas[indx].isLike}
-            note={noteDatas[indx].note ? true : false}
-          />
-        ));
+        return images.map((img, indx) =>  
+            <GalleryImage
+              key={indx}
+              bgColor={'#D6510B'}
+              setImage={setImage}
+              imgSource={img}
+              imgIndx={indx}
+              setImgIndx={setImgIndx}
+              isLike={isLikeDatas[indx].isLike}
+              note={noteDatas[indx].note ? true : false}
+            />
+        );
       case 'like':
         return isLikeDatas.map((isLikeData, indx) => {
           if (isLikeData.isLike) {
             return (
               <GalleryImage
                 key={indx}
-                bgColor={'#FF607F'}
+                bgColor={'#D6510B'}
                 setImage={setImage}
                 imgSource={images[indx]}
                 imgIndx={indx}
@@ -147,7 +148,7 @@ const Search = ({route}) => {
             return (
               <GalleryImage
                 key={indx}
-                bgColor={'#FF607F'}
+                bgColor={'#D6510B'}
                 setImage={setImage}
                 imgSource={images[indx]}
                 imgIndx={indx}
@@ -166,7 +167,9 @@ const Search = ({route}) => {
       style={{
         width: '100%',
         height: '100%',
+        //backgroundColor: '#FEF4ED',
         backgroundColor: '#F5F5F5',
+        //backgroundColor: '#DCD3CD',
         position: 'relative',
       }}>
       {image ? null : (
@@ -183,21 +186,21 @@ const Search = ({route}) => {
               width: '60%',
             }}>
             <TouchableOpacity onPress={() => setState('all')}>
-              <FontAwesome5
-                name="images"
+              <Ionic
+                name="images-outline"
                 style={{fontSize: 30, color: 'black'}}
               />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setState('like')}>
-              <MaterialCommunityIcons
-                name="heart-multiple"
-                style={{fontSize: 30, color: 'black'}}
+              <Ionic
+                name="heart-circle-outline"
+                style={{fontSize: 35, color: 'black'}}
               />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setState('note')}>
-              <MaterialCommunityIcons
-                name="note-multiple"
-                style={{fontSize: 30, color: 'black'}}
+              <Ionic
+                name="layers-outline"
+                style={{fontSize: 33, color: 'black', paddingTop:1}}
               />
             </TouchableOpacity>
           </View>
@@ -205,12 +208,19 @@ const Search = ({route}) => {
       )}
       <ScrollView>
         <View style={{paddingBottom: 60}}>
+        <Text style={{
+          fontWeight: 'bold', fontSize: 30, paddingLeft: 40, paddingTop: 10, color: 'black'
+        }}>
+          {state === 'all' ? 'Gallery' : state === 'like' ? 'Liked Photos' : 'Memo'}
+        </Text>
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-around',
-              padding: 15,
+              justifyContent: 'center',
               flexWrap: 'wrap',
+              justifyContent: 'space-evenly',
+              paddingLeft: 12,
+              paddingRight: 2
             }}>
             <FilteredImages />
           </View>
