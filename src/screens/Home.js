@@ -37,31 +37,7 @@ import post19 from '../../assets/images/post19.jpeg';
 import post20 from '../../assets/images/post20.jpeg';
 import axios from 'axios';
 
-const mockData = [
-  {
-    id: 1,
-    name: '아주대 병원',
-    phoneNumber: '010-1234-5678',
-    emailaddr: '2004imjimin@pusan.ac.kr',
-    addr: '아주대병원',
-  },
-  {
-    id: 1,
-    name: '임지민',
-    phoneNumber: '010-1234-5678',
-    emailaddr: '2004imjimin@pusan.ac.kr',
-    addr: '지스트',
-  },
-  {
-    id: 1,
-    name: '임지민',
-    phoneNumber: '010-1234-5678',
-    emailaddr: '2004imjimin@pusan.ac.kr',
-    addr: '부산백병원',
-  },
-];
-
-const Home = ({navigation: {navigate}}) => {
+const Home = ({navigation: {navigate}, mapData, setMapData}) => {
   let n = 0;
   const [wannaPin, setWannaPin] = useState(false);
   const [wannaData, setWannaData] = useState(false);
@@ -88,7 +64,7 @@ const Home = ({navigation: {navigate}}) => {
   useEffect(() => {
     const fetchCoordinates = async () => {
       const coordinates = await Promise.all(
-        mockData.map(async data => {
+        mapData.map(async data => {
           const [lat, lon] = await findCoordinate(data.addr);
           return [lat, lon];
         }),

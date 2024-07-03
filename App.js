@@ -57,7 +57,11 @@ const App = () => {
             return <Ionic name={iconName} size={size} color={color} />;
           },
         })}>
-        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Home">
+          {props => (
+            <Home {...props} mapData={mapData} setMapData={setMapData} />
+          )}
+        </Tab.Screen>
         <Tab.Screen name="Search" component={Search} />
         {/* <Tab.Screen name="Activity" component={Activity} /> */}
         <Tab.Screen name="Profile">
