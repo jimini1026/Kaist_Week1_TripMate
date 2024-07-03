@@ -31,12 +31,12 @@ const PhoneNumber = ({iconName, name, phoneNumber, pressInfo, setPressInfo, icon
       {iconIsIonic ? (
         <Ionic
           name={iconName}
-          style={{color: 'gray', fontSize: 50, paddingRight: 10}}
+          style={{color: '#262F34', fontSize: 50, paddingRight: 10}}
         />
       ) : (
         <MaterialCommunityIcons
           name={iconName}
-          style={{fontSize: 40, paddingRight: 10, color: 'gray'}}
+          style={{fontSize: 40, paddingRight: 10, color: '#D6510B'}}
         />
       )}
       <View>

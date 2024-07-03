@@ -70,7 +70,7 @@ const ExpandImage = ({
                 name={isLike ? 'heart' : 'heart-outline'}
                 style={{
                   fontSize: 26,
-                  color: isLike ? 'red' : 'black',
+                  color: isLike ? '#D6510B' : '#262F34',
                 }}
               />
             </TouchableOpacity>
@@ -82,7 +82,7 @@ const ExpandImage = ({
               style={{marginLeft: 'auto'}}>
               <MaterialIcons
                 name="cancel"
-                style={{fontSize: 25, color: 'black'}}
+                style={{fontSize: 25, color: '#262F34'}}
               />
             </TouchableOpacity>
           </View>
@@ -101,7 +101,7 @@ const ExpandImage = ({
               placeholderTextColor="gray"
               style={{
                 color: 'black',
-                backgroundColor: '#FAF3B6',
+                backgroundColor: '#FEF4ED',
                 paddingVertical: 15,
                 paddingHorizontal: 20,
                 width: '100%',
