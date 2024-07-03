@@ -15,6 +15,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import post1 from '../../assets/images/post1.jpeg';
 import post2 from '../../assets/images/post2.jpeg';
 import post3 from '../../assets/images/post3.jpeg';
@@ -233,39 +234,111 @@ const Home = ({navigation: {navigate}, mapData, setMapData}) => {
         {wannaData && data ? (
           <View
             style={{
-              backgroundColor: 'pink',
-              width: '100%',
-              height: 200,
+              backgroundColor: '#FEF4ED',
+              width: '90%',
+              height: 250,
               position: 'absolute',
-              bottom: 0,
+              bottom: 10,
+              borderRadius: 25,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}>
-            <Text style={{color: 'black'}}>
-              {data.name ? '장소 이름 : ' + data.name : null}
-            </Text>
-            <Text style={{color: 'black'}}>장소 종류 : {data.type}</Text>
-            <Text style={{color: 'black'}}>주소 : {data.display_name}</Text>
+            <View
+              style={{
+                justifyContent: 'space-around',
+                height: '80%',
+                paddingHorizontal: 20,
+                width: '98%',
+              }}>
+              <View style={{paddingHorizontal: 10, flexDirection: 'row'}}>
+                <MaterialIcons
+                  name="place"
+                  style={{
+                    fontSize: 22,
+                    color: 'black',
+                    paddingRight: 3,
+                    paddingTop: 4,
+                  }}
+                />
+                <Text
+                  style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
+                  {data.name ? data.name : '결과값 없음'}
+                </Text>
+              </View>
+              <View>
+                <View style={{paddingHorizontal: 10}}>
+                  <Text style={{color: '#262F34', fontSize: 12}}>
+                    장소 구분
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    paddingVertical: 5,
+                    paddingHorizontal: 10,
+                    borderRadius: 10,
+                  }}>
+                  <Text style={{color: 'black', fontWeight: '600'}}>
+                    {data.type}
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <View style={{paddingHorizontal: 10}}>
+                  <Text style={{color: '#262F34', fontSize: 12}}>주소</Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    paddingVertical: 5,
+                    paddingHorizontal: 10,
+                    borderRadius: 10,
+                  }}>
+                  <Text style={{color: 'black', fontWeight: '600'}}>
+                    {data.display_name}
+                  </Text>
+                </View>
+              </View>
+            </View>
           </View>
         ) : null}
         {wannaPin ? (
           <View
             style={{
               position: 'absolute',
-              bottom: 0,
-              backgroundColor: '#EAEAEA',
-              width: '100%',
-              height: 200,
+              bottom: 10,
+              backgroundColor: '#FEF4ED',
+              width: '95%',
+              height: 250,
+              borderRadius: 25,
             }}>
-            <TouchableOpacity onPress={() => setWannaPin(false)}>
-              <MaterialIcons
-                name="cancel"
+            <View style={{flexDirection: 'row'}}>
+              <View
                 style={{
-                  color: 'black',
-                  fontSize: 22,
-                  marginTop: 10,
-                  marginLeft: '90%',
-                }}
-              />
-            </TouchableOpacity>
+                  flexDirection: 'row',
+                  paddingHorizontal: 20,
+                  paddingTop: 20,
+                }}>
+                <MaterialCommunityIcons
+                  name="image-move"
+                  style={{fontSize: 20, color: 'black'}}
+                />
+                <Text style={{color: 'black', fontWeight: '700', fontSize: 13}}>
+                  이미지 선택
+                </Text>
+              </View>
+              <TouchableOpacity onPress={() => setWannaPin(false)}>
+                <FontAwesome6
+                  name="xmark"
+                  style={{
+                    color: 'black',
+                    fontSize: 22,
+                    marginTop: 10,
+                    marginLeft: '75%',
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
             <ScrollView
               horizontal
               contentContainerStyle={{
@@ -274,6 +347,7 @@ const Home = ({navigation: {navigate}, mapData, setMapData}) => {
               {images.map((img, indx) => (
                 <TouchableOpacity
                   key={indx}
+                  style={{width: 180}}
                   onPress={() => {
                     setWannaPin(false);
                     let copiedItems = [...location];
