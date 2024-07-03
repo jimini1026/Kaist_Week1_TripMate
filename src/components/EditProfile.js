@@ -5,31 +5,31 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {StyleSheet} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const EditProfile = ({ setPress, addProfile, addMapProfile }) => {
+const EditProfile = ({setPress, addProfile, addMapProfile}) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [emailaddr, setemailaddr] = useState('');
   const [addr, setaddr] = useState('');
-  
+
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
 
   const handleAddProfile = () => {
     if (name && phoneNumber) {
-      addProfile({ name, phoneNumber, emailaddr, addr });
+      addProfile({name, phoneNumber, emailaddr, addr});
     }
   };
 
   const handleAddMapProfile = () => {
     if (name && phoneNumber) {
-      addMapProfile({ name, phoneNumber, emailaddr, addr });
+      addMapProfile({name, phoneNumber, emailaddr, addr});
     }
   };
 
@@ -51,28 +51,36 @@ const EditProfile = ({ setPress, addProfile, addMapProfile }) => {
           borderRadius: 30,
           overflow: 'hidden',
         }}>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingBottom: 20,
-          paddingHorizontal: 20,
-        }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "black", paddingTop: 30}}>
-          연락처 추가</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingBottom: 20,
+            paddingHorizontal: 20,
+          }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'black',
+              paddingTop: 30,
+            }}>
+            연락처 추가
+          </Text>
           <TouchableOpacity onPress={() => setPress(false)}>
-          <AntDesign
-            name="closecircle"
-            style={{color: 'black', fontSize: 18, paddingLeft: 160}}
-          />
+            <AntDesign
+              name="closecircle"
+              style={{color: 'black', fontSize: 18, paddingLeft: 160}}
+            />
           </TouchableOpacity>
         </View>
 
         <View style={styles.container}>
           <Text style={styles.text}>이름</Text>
           <TextInput
-            style={{...styles.textInput, color:'black'}}
+            style={{...styles.textInput, color: 'black'}}
             value={name}
-            placeholderTextColor='black'
+            placeholderTextColor="black"
             onChangeText={setName}
             placeholder="이름을 입력하세요"
           />
@@ -84,7 +92,7 @@ const EditProfile = ({ setPress, addProfile, addMapProfile }) => {
             style={{...styles.textInput, color: 'black'}}
             value={phoneNumber}
             onChangeText={setPhoneNumber}
-            placeholderTextColor='black'
+            placeholderTextColor="black"
             placeholder="전화번호를 입력하세요"
             keyboardType="phone-pad"
           />
@@ -96,7 +104,7 @@ const EditProfile = ({ setPress, addProfile, addMapProfile }) => {
             style={{...styles.textInput, color: 'black'}}
             value={emailaddr}
             onChangeText={setemailaddr}
-            placeholderTextColor='black'
+            placeholderTextColor="black"
             placeholder="메일주소를 입력하세요"
           />
         </View>
@@ -107,7 +115,7 @@ const EditProfile = ({ setPress, addProfile, addMapProfile }) => {
             style={{...styles.textInput1, color: 'black'}}
             value={addr}
             onChangeText={setaddr}
-            placeholderTextColor='black'
+            placeholderTextColor="black"
             placeholder="주소를 입력하세요"
           />
         </View>
@@ -116,12 +124,12 @@ const EditProfile = ({ setPress, addProfile, addMapProfile }) => {
           <TouchableOpacity style={button.container} onPress={handleAddProfile}>
             <Text style={button.text}>개인연락처</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={button.container} onPress={handleAddMapProfile}>
+          <TouchableOpacity
+            style={button.container}
+            onPress={handleAddMapProfile}>
             <Text style={button.text}>지도연락처</Text>
           </TouchableOpacity>
         </View>
-        
-
       </View>
     </View>
   );
@@ -129,8 +137,8 @@ const EditProfile = ({ setPress, addProfile, addMapProfile }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#EAEAEA",
-    justifyContent: "center",
+    backgroundColor: '#EAEAEA',
+    justifyContent: 'center',
     marginHorizontal: 15,
     height: '15%',
     width: '90%',
@@ -139,12 +147,12 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    fontWeight: "bold",
-    color: "black",
-    paddingLeft: 5
+    fontWeight: 'bold',
+    color: 'black',
+    paddingLeft: 5,
   },
   textInput: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     width: '95%',
     height: '45%',
     marginTop: 5,
@@ -156,11 +164,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     height: '15%',
     justifyContent: 'space-between',
-    marginTop: 10
+    marginTop: 10,
   },
   container1: {
-    backgroundColor: "#EAEAEA",
-    justifyContent: "center",
+    backgroundColor: '#EAEAEA',
+    justifyContent: 'center',
     marginHorizontal: 15,
     height: '20%',
     width: '90%',
@@ -168,30 +176,30 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   textInput1: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     width: '95%',
     height: '60%',
     marginTop: 5,
     borderRadius: 35,
     padding: 10,
   },
-})
+});
 
 const button = StyleSheet.create({
   container: {
-    backgroundColor: "#3CA9E1",
+    backgroundColor: '#D6510B',
     borderRadius: 20,
     width: '45%',
     height: '40%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10
+    marginTop: 10,
   },
   text: {
     fontSize: 15,
-    color: 'black',
-    fontWeight: 'bold'
-  }
-})
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
 
 export default EditProfile;
